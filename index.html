@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Arab Craft | المنصة العربية الأولى لـ Minecraft - مودات، سيرفرات، خرائط وإضافات</title>
+<meta name="description" content="Arab Craft هي أفضل منصة عربية لتحميل ماين كرافت والمودات والإضافات والخرائط والسيرفرات في مكان واحد. انضم لأكبر مجتمع عربي لماين كرافت.">
+<meta name="keywords" content="ماين كرافت, Minecraft عربي, تحميل ماين كرافت, مودات ماين كرافت, سيرفرات ماين كرافت, Arab Craft, ماين كرافت بيدروك">
+<meta property="og:title" content="Arab Craft | المنصة العربية الأولى لـ Minecraft">
+<meta property="og:description" content="أفضل منصة عربية لتحميل ماين كرافت والمودات والإضافات والسيرفرات في مكان واحد.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0a0e0c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230a0e0c%22/><rect x=%2220%22 y=%2220%22 width=%2225%22 height=%2225%22 fill=%22%2300ff9d%22/><rect x=%2255%22 y=%2255%22 width=%2225%22 height=%2225%22 fill=%22%2300d4ff%22/></svg>">
+<style>
+/* ===================== ROOT & RESET ===================== */
+:root{
+  --bg-void:#070908;
+  --bg-deep:#0a0f0d;
+  --bg-panel:#0e1613;
+  --bg-panel-2:#121b17;
+  --grass:#00ff9d;
+  --grass-dim:#00c97e;
+  --diamond:#00d4ff;
+  --diamond-dim:#00a8cc;
+  --gold:#ffd700;
+  --redstone:#ff4655;
+  --stone:#7d8a86;
+  --stone-light:#aab8b3;
+  --text-hi:#eafff4;
+  --text-mid:#b9c9c2;
+  --text-low:#7a8d86;
+  --glass-bg:rgba(18,28,24,0.55);
+  --glass-border:rgba(0,255,157,0.18);
+  --glass-border-blue:rgba(0,212,255,0.18);
+  --font-display:'Cairo',sans-serif;
+  --font-body:'Tajawal',sans-serif;
+  --radius-block:6px;
+  --radius-card:16px;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important;}
+}
+body{
+  font-family:var(--font-body);
+  background:var(--bg-void);
+  color:var(--text-hi);
+  overflow-x:hidden;
+  position:relative;
+  line-height:1.7;
+}
+::selection{background:var(--grass);color:#04130c;}
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:var(--bg-deep);}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--grass),var(--diamond));border-radius:10px;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+img{max-width:100%;display:block;}
+:focus-visible{outline:2px solid var(--diamond);outline-offset:3px;}
+h1,h2,h3,h4{font-family:var(--font-display);}
+
+/* ===================== UTILITY ===================== */
+.container{width:100%;max-width:1280px;margin:0 auto;padding:0 24px;}
+.section{position:relative;padding:120px 0;}
+.section-tight{padding:90px 0;}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-display);font-weight:800;font-size:13px;letter-spacing:.12em;
+  color:var(--grass);text-transform:uppercase;
+  margin-bottom:18px;
+}
+.eyebrow::before{content:'';width:18px;height:18px;background:var(--grass);box-shadow:0 0 12px var(--grass), inset 2px 2px 0 rgba(0,0,0,.25);border-radius:3px;}
+.section-title{
+  font-size:clamp(28px,4.2vw,46px);
+  font-weight:900;
+  margin-bottom:16px;
+  letter-spacing:-.01em;
+}
+.section-sub{
+  color:var(--text-mid);
+  font-size:17px;
+  max-width:620px;
+  margin-bottom:56px;
+}
+.text-grad{
+  background:linear-gradient(95deg,var(--grass) 10%,var(--diamond) 90%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out);}
+.reveal.in{opacity:1;transform:translateY(0);}
+.reveal-stagger > *{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out);}
+.reveal-stagger.in > *{opacity:1;transform:translateY(0);}
+
+/* ===================== LOADER ===================== */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:radial-gradient(circle at 50% 40%,#0d1814 0%,#070908 75%);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .7s var(--ease-out), visibility .7s var(--ease-out);
+}
+#loader.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+.loader-inner{display:flex;flex-direction:column;align-items:center;gap:26px;}
+.loader-cube{
+  position:relative;width:64px;height:64px;
+  transform-style:preserve-3d;
+  animation:cubeSpin 2.4s linear infinite;
+}
+@keyframes cubeSpin{from{transform:rotateX(-28deg) rotateY(0deg);}to{transform:rotateX(-28deg) rotateY(360deg);}}
+.lc-face{position:absolute;width:64px;height:64px;border:2px solid rgba(0,255,157,.5);}
+.lc-top{background:linear-gradient(135deg,var(--grass),var(--diamond));transform:rotateX(90deg) translateZ(32px);opacity:.95;box-shadow:0 0 30px rgba(0,255,157,.6);}
+.lc-front{background:rgba(0,255,157,.25);transform:translateZ(32px);backdrop-filter:blur(2px);}
+.lc-right{background:rgba(0,212,255,.2);transform:rotateY(90deg) translateZ(32px);}
+.loader-title{font-family:var(--font-display);font-weight:900;font-size:22px;letter-spacing:.08em;color:var(--text-hi);}
+.loader-title span{color:var(--grass);text-shadow:0 0 18px rgba(0,255,157,.7);}
+.loader-bar{width:220px;height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;border:1px solid rgba(0,255,157,.2);}
+.loader-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--grass),var(--diamond));box-shadow:0 0 14px rgba(0,255,157,.8);transition:width .25s var(--ease-out);}
+.loader-pct{font-family:var(--font-display);font-weight:700;font-size:13px;color:var(--text-low);letter-spacing:.05em;}
+
+/* ===================== ANIMATED 3D BACKGROUND ===================== */
+#bgCanvasWrap{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+#bgCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.bg-particles{position:absolute;inset:0;}
+.bg-vignette{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,transparent 0%,rgba(7,9,8,.4) 55%,var(--bg-void) 100%),
+             linear-gradient(180deg,transparent 0%,var(--bg-void) 100%);
+}
+.bg-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(0,255,157,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,157,.035) 1px,transparent 1px);
+  background-size:42px 42px;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 20%,#000 30%,transparent 80%);
+}
+.cursor-glow{
+  position:fixed;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,255,157,.06) 0%,rgba(0,212,255,.03) 45%,transparent 72%);
+  pointer-events:none;z-index:1;transform:translate(-50%,-50%);
+  transition:left .15s linear, top .15s linear;
+  left:50%;top:30%;
+}
+@media (max-width:768px){.cursor-glow{display:none;}}
+
+/* ===================== NAVBAR ===================== */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:18px 0;
+  transition:padding .35s var(--ease-out),background .35s var(--ease-out),border-color .35s var(--ease-out);
+  border-bottom:1px solid transparent;
+}
+.navbar.scrolled{
+  padding:10px 0;
+  background:rgba(7,11,9,.78);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  border-bottom:1px solid rgba(0,255,157,.12);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-cube{position:relative;width:32px;height:32px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;transform:rotate(0deg);transition:transform .5s var(--ease-out);}
+.brand:hover .brand-cube{transform:rotate(90deg);}
+.brand-cube i{display:block;border-radius:2px;}
+.brand-cube i:nth-child(1){background:var(--grass);grid-column:1/3;box-shadow:0 0 10px rgba(0,255,157,.7);}
+.brand-cube i:nth-child(2){background:var(--diamond);box-shadow:0 0 10px rgba(0,212,255,.7);}
+.brand-cube i:nth-child(3){background:var(--text-hi);opacity:.85;}
+.brand-text{font-family:var(--font-display);font-weight:900;font-size:21px;letter-spacing:.03em;color:var(--text-hi);}
+.brand-text span{color:var(--grass);}
+.nav-links{display:flex;align-items:center;gap:30px;}
+.nav-links a{
+  font-size:14.5px;font-weight:700;color:var(--text-mid);position:relative;padding:6px 0;
+  transition:color .25s;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;right:0;left:auto;width:0;height:2px;
+  background:linear-gradient(90deg,var(--grass),var(--diamond));
+  transition:width .3s var(--ease-out);
+}
+.nav-links a:hover{color:var(--text-hi);}
+.nav-links a:hover::after{width:100%;}
+.nav-actions{display:flex;align-items:center;gap:14px;}
+.btn-discord-mini{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 18px;border-radius:50px;
+  background:rgba(88,101,242,.15);border:1px solid rgba(88,101,242,.4);
+  color:#c5cbff;font-weight:700;font-size:14px;
+  transition:all .3s var(--ease-out);
+}
+.btn-discord-mini:hover{background:rgba(88,101,242,.28);box-shadow:0 0 22px rgba(88,101,242,.45);transform:translateY(-2px);}
+.nav-burger{display:none;flex-direction:column;gap:5px;width:30px;}
+.nav-burger span{height:2px;background:var(--text-hi);border-radius:2px;transition:all .3s var(--ease-out);}
+@media (max-width:920px){
+  .nav-links{
+    position:fixed;top:0;right:0;height:100vh;width:78%;max-width:320px;
+    background:rgba(8,13,11,.97);backdrop-filter:blur(20px);
+    flex-direction:column;justify-content:center;align-items:flex-start;
+    padding:40px;gap:8px;
+    transform:translateX(100%);transition:transform .4s var(--ease-out);
+    border-left:1px solid rgba(0,255,157,.15);
+  }
+  .nav-links.open{transform:translateX(0);}
+  .nav-links a{width:100%;padding:14px 0;font-size:17px;border-bottom:1px solid rgba(255,255,255,.06);}
+  .nav-burger{display:flex;}
+  .nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-burger.open span:nth-child(2){opacity:0;}
+  .nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .btn-discord-mini span{display:none;}
+  .btn-discord-mini{padding:10px;}
+}
+
+/* ===================== HERO ===================== */
+.hero{
+  position:relative;min-height:100vh;display:flex;align-items:center;
+  padding:140px 0 80px;overflow:hidden;
+}
+.hero-blocks{position:absolute;inset:0;z-index:0;pointer-events:none;}
+.floaty{
+  position:absolute;border-radius:8px;
+  box-shadow:0 18px 50px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.06);
+  animation:floatY 7s ease-in-out infinite;
+}
+.fb1{width:54px;height:54px;top:18%;right:8%;background:linear-gradient(145deg,#0d3324,#0a2418);border:1px solid rgba(0,255,157,.35);animation-delay:0s;}
+.fb2{width:36px;height:36px;top:62%;right:14%;background:linear-gradient(145deg,#0c2e3a,#091e26);border:1px solid rgba(0,212,255,.35);animation-delay:1.2s;}
+.fb3{width:44px;height:44px;top:30%;left:7%;background:linear-gradient(145deg,#1a1408,#120e06);border:1px solid rgba(255,215,0,.3);animation-delay:2.1s;}
+.fb4{width:28px;height:28px;top:75%;left:18%;background:linear-gradient(145deg,#0d3324,#0a2418);border:1px solid rgba(0,255,157,.3);animation-delay:.6s;}
+.fb5{width:60px;height:60px;top:8%;left:30%;background:linear-gradient(145deg,#0c2e3a,#091e26);border:1px solid rgba(0,212,255,.25);animation-delay:3s;opacity:.7;}
+@keyframes floatY{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-26px) rotate(8deg);}}
+@media (max-width:768px){.floaty{display:none;}}
+
+.hero-inner{position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:9px 20px;border-radius:50px;
+  background:var(--glass-bg);border:1px solid var(--glass-border);
+  backdrop-filter:blur(12px);
+  font-size:13.5px;font-weight:700;color:var(--text-mid);
+  margin-bottom:32px;
+}
+.ping{width:8px;height:8px;border-radius:50%;background:var(--grass);box-shadow:0 0 0 0 rgba(0,255,157,.7);animation:pingPulse 1.8s infinite;}
+@keyframes pingPulse{0%{box-shadow:0 0 0 0 rgba(0,255,157,.6);}70%{box-shadow:0 0 0 10px rgba(0,255,157,0);}100%{box-shadow:0 0 0 0 rgba(0,255,157,0);}}
+.hero-title{display:flex;flex-direction:column;gap:6px;margin-bottom:26px;}
+.ht-line{font-size:clamp(18px,2.6vw,26px);font-weight:700;color:var(--text-mid);}
+.ht-brand{font-size:clamp(46px,9vw,98px);font-weight:900;letter-spacing:.01em;line-height:1.05;
+  text-shadow:0 0 60px rgba(0,255,157,.18);}
+.hero-desc{max-width:640px;font-size:18px;color:var(--text-mid);margin-bottom:42px;}
+.hero-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:center;margin-bottom:60px;}
+
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:17px 34px;border-radius:12px;
+  font-family:var(--font-display);font-weight:800;font-size:16px;
+  transition:transform .3s var(--ease-out),box-shadow .3s var(--ease-out),background .3s var(--ease-out);
+  position:relative;overflow:hidden;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--grass),var(--diamond-dim));
+  color:#04130c;
+  box-shadow:0 0 0 1px rgba(0,255,157,.4), 0 12px 36px -8px rgba(0,255,157,.55);
+}
+.btn-primary:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 0 0 1px rgba(0,255,157,.6), 0 20px 46px -10px rgba(0,255,157,.7);}
+.btn-discord{
+  background:rgba(88,101,242,.14);
+  border:1.5px solid rgba(88,101,242,.5);
+  color:#dfe2ff;
+  backdrop-filter:blur(10px);
+}
+.btn-discord:hover{background:rgba(88,101,242,.26);transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px -10px rgba(88,101,242,.6);}
+.btn-discord-lg{
+  display:inline-flex;align-items:center;gap:14px;
+  padding:22px 48px;border-radius:16px;
+  background:linear-gradient(135deg,rgba(88,101,242,.25),rgba(88,101,242,.1));
+  border:1.5px solid rgba(88,101,242,.5);
+  color:#fff;font-family:var(--font-display);font-weight:800;font-size:19px;
+  box-shadow:0 0 0 1px rgba(88,101,242,.25), 0 20px 50px -12px rgba(88,101,242,.6);
+  transition:all .35s var(--ease-out);
+  position:relative;
+}
+.btn-discord-lg:hover{transform:translateY(-5px) scale(1.03);box-shadow:0 0 0 1px rgba(88,101,242,.5), 0 28px 60px -10px rgba(88,101,242,.8);}
+
+.hero-scroll{display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--text-low);font-size:12px;font-weight:700;letter-spacing:.05em;}
+.scroll-mouse{width:24px;height:38px;border:2px solid var(--text-low);border-radius:14px;display:flex;justify-content:center;padding-top:6px;}
+.scroll-dot{width:4px;height:8px;border-radius:2px;background:var(--grass);animation:scrollDot 1.6s ease-in-out infinite;}
+@keyframes scrollDot{0%{transform:translateY(0);opacity:1;}70%{transform:translateY(10px);opacity:0;}100%{opacity:0;}}
+
+@media (max-width:560px){
+  .hero{padding:120px 0 60px;}
+  .btn,.btn-discord{width:100%;justify-content:center;}
+  .hero-actions{width:100%;flex-direction:column;}
+}
+
+/* ===================== STATS ===================== */
+.stats-section{position:relative;padding:50px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.stat-card{
+  text-align:center;padding:34px 18px;border-radius:var(--radius-card);
+  background:var(--glass-bg);border:1px solid var(--glass-border);
+  backdrop-filter:blur(14px);
+  transition:transform .4s var(--ease-out),border-color .4s;
+}
+.stat-card:hover{transform:translateY(-6px);border-color:rgba(0,255,157,.45);}
+.stat-icon{font-size:28px;margin-bottom:10px;}
+.stat-num{font-family:var(--font-display);font-weight:900;font-size:clamp(30px,4vw,44px);
+  background:linear-gradient(95deg,var(--grass),var(--diamond));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.stat-label{color:var(--text-mid);font-weight:700;font-size:14.5px;margin-top:6px;}
+@media (max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr);}}
+
+/* ===================== DOWNLOAD ===================== */
+.download-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-bottom:56px;}
+.download-card{
+  position:relative;padding:36px;border-radius:var(--radius-card);
+  background:var(--glass-bg);border:1px solid var(--glass-border);
+  backdrop-filter:blur(16px);overflow:hidden;
+  transition:transform .4s var(--ease-out),box-shadow .4s var(--ease-out),border-color .4s;
+}
+.download-card:hover{transform:translateY(-8px);box-shadow:0 24px 50px -16px rgba(0,255,157,.35);border-color:rgba(0,255,157,.4);}
+.dc-glow{position:absolute;top:-60px;left:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(0,255,157,.18),transparent 70%);filter:blur(10px);}
+.dc-glow-blue{background:radial-gradient(circle,rgba(0,212,255,.18),transparent 70%);}
+.dc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;position:relative;}
+.dc-icon{
+  width:60px;height:60px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,255,157,.12);border:1px solid rgba(0,255,157,.3);color:var(--grass);
+}
+.dc-icon-blue{background:rgba(0,212,255,.12);border-color:rgba(0,212,255,.3);color:var(--diamond);}
+.dc-tag{padding:6px 14px;border-radius:50px;background:rgba(0,255,157,.12);color:var(--grass);font-size:12px;font-weight:800;border:1px solid rgba(0,255,157,.3);}
+.dc-tag-blue{background:rgba(0,212,255,.12);color:var(--diamond);border-color:rgba(0,212,255,.3);}
+.download-card h3{font-size:23px;font-weight:800;margin-bottom:10px;position:relative;}
+.download-card h3 span{color:var(--text-mid);font-weight:600;font-size:17px;}
+.download-card p{color:var(--text-mid);font-size:15px;margin-bottom:20px;position:relative;}
+.dc-meta{display:flex;gap:24px;margin-bottom:26px;position:relative;}
+.dc-meta li{font-size:13px;color:var(--text-low);display:flex;flex-direction:column;gap:4px;}
+.dc-meta li strong{color:var(--text-hi);font-size:14.5px;}
+.dc-btn{width:100%;justify-content:center;position:relative;}
+.dc-btn-blue{background:linear-gradient(135deg,var(--diamond),var(--grass-dim));box-shadow:0 0 0 1px rgba(0,212,255,.4),0 12px 36px -8px rgba(0,212,255,.55);}
+.dc-btn-blue:hover{box-shadow:0 0 0 1px rgba(0,212,255,.6),0 20px 46px -10px rgba(0,212,255,.7);}
+
+.discord-banner{
+  display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;
+  padding:48px;border-radius:24px;
+  background:linear-gradient(120deg,rgba(88,101,242,.12),rgba(0,255,157,.06));
+  border:1px solid rgba(88,101,242,.3);backdrop-filter:blur(16px);
+}
+.db-content h3{font-size:26px;font-weight:800;margin-bottom:10px;}
+.db-content p{color:var(--text-mid);max-width:480px;}
+@media (max-width:860px){
+  .download-grid{grid-template-columns:1fr;}
+  .discord-banner{flex-direction:column;text-align:center;padding:34px 24px;}
+  .db-content p{max-width:100%;}
+}
+
+/* ===================== SECTION ALT BG ===================== */
+.section-alt{background:linear-gradient(180deg,transparent,rgba(0,255,157,.025) 50%,transparent);}
+
+/* ===================== SERVERS ===================== */
+.server-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.server-card{
+  border-radius:var(--radius-card);overflow:hidden;
+  background:var(--glass-bg);border:1px solid var(--glass-border);
+  backdrop-filter:blur(14px);
+  transition:transform .4s var(--ease-out),box-shadow .4s var(--ease-out),border-color .4s;
+}
+.server-card:hover{transform:translateY(-8px);box-shadow:0 24px 50px -16px rgba(0,255,157,.3);border-color:rgba(0,255,157,.4);}
+.sc-scene{
+  position:relative;height:150px;overflow:hidden;
+  display:flex;align-items:flex-end;justify-content:center;
+}
+.sc-sky{position:absolute;inset:0;}
+.sc-blocks{position:relative;z-index:2;display:flex;align-items:flex-end;gap:3px;padding-bottom:0;width:100%;justify-content:center;}
+.sc-block{border-radius:2px 2px 0 0;box-shadow:inset 2px 0 0 rgba(255,255,255,.08), inset -2px 0 0 rgba(0,0,0,.15);}
+.sc-status{
+  position:absolute;top:12px;left:12px;z-index:3;
+  display:flex;align-items:center;gap:6px;
+  padding:5px 11px;border-radius:50px;font-size:11px;font-weight:800;
+  background:rgba(0,0,0,.45);backdrop-filter:blur(6px);
+}
+.sc-status .dot{width:7px;height:7px;border-radius:50%;background:var(--grass);box-shadow:0 0 8px var(--grass);}
+.sc-players{
+  position:absolute;top:12px;right:12px;z-index:3;
+  padding:5px 12px;border-radius:50px;font-size:11px;font-weight:800;
+  background:rgba(0,0,0,.45);backdrop-filter:blur(6px);color:var(--text-hi);
+  display:flex;align-items:center;gap:5px;
+}
+.server-body{padding:24px;}
+.server-body h3{font-size:19px;font-weight:800;margin-bottom:8px;}
+.server-body p{color:var(--text-mid);font-size:14px;margin-bottom:18px;min-height:42px;}
+.server-ip-row{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);
+  border-radius:10px;padding:10px 14px;
+}
+.server-ip{flex:1;font-family:monospace;font-size:13.5px;color:var(--diamond);letter-spacing:.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.copy-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:7px 13px;border-radius:8px;font-size:12.5px;font-weight:700;
+  background:rgba(0,255,157,.12);color:var(--grass);border:1px solid rgba(0,255,157,.3);
+  transition:all .25s var(--ease-out);white-space:nowrap;
+}
+.copy-btn:hover{background:rgba(0,255,157,.22);}
+.copy-btn.copied{background:rgba(0,255,157,.35);}
+@media (max-width:980px){.server-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:620px){.server-grid{grid-template-columns:1fr;}}
+
+/* ===================== VOXEL THUMB (shared) ===================== */
+.voxel-thumb{
+  position:relative;height:150px;border-radius:14px 14px 0 0;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.voxel-thumb::before{content:'';position:absolute;inset:0;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:14px 14px;
+}
+.voxel-icon{position:relative;z-index:2;font-size:46px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.5));transition:transform .5s var(--ease-out);}
+.glass-card:hover .voxel-icon{transform:scale(1.12) rotate(-4deg);}
+.voxel-shine{position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.12),transparent 55%);}
+
+/* ===================== COMING SOON STATES ===================== */
+.soon-badge{
+  position:absolute;bottom:12px;left:50%;transform:translateX(-50%);z-index:3;
+  padding:5px 16px;border-radius:50px;font-size:11px;font-weight:800;letter-spacing:.03em;
+  background:rgba(0,0,0,.5);color:var(--gold);border:1px solid rgba(255,215,0,.4);backdrop-filter:blur(6px);
+}
+.soon-icon{position:relative;z-index:2;font-size:40px;opacity:.55;filter:grayscale(.3);}
+.soon-card{opacity:.92;}
+.soon-card:hover{opacity:1;}
+.soon-card .gc-body p, .soon-card .server-body p{color:var(--text-low);}
+
+.glass-card{
+  border-radius:var(--radius-card);overflow:hidden;
+  background:var(--glass-bg);border:1px solid var(--glass-border);
+  backdrop-filter:blur(14px);
+  transition:transform .4s var(--ease-out),box-shadow .4s var(--ease-out),border-color .4s;
+}
+.glass-card:hover{transform:translateY(-8px);box-shadow:0 24px 50px -16px rgba(0,255,157,.3);border-color:rgba(0,255,157,.4);}
+.gc-body{padding:22px;}
+.gc-body h3{font-size:18px;font-weight:800;margin-bottom:8px;}
+.gc-body p{color:var(--text-mid);font-size:13.5px;margin-bottom:16px;min-height:38px;}
+.gc-meta-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.gc-version{
+  padding:4px 11px;border-radius:50px;font-size:11.5px;font-weight:800;
+  background:rgba(0,212,255,.12);color:var(--diamond);border:1px solid rgba(0,212,255,.3);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:65%;
+}
+.gc-size{font-size:11.5px;font-weight:700;color:var(--text-low);font-family:monospace;flex-shrink:0;}
+.gc-dl-btn{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:11px;border-radius:10px;font-weight:800;font-size:13.5px;
+  background:linear-gradient(135deg,rgba(0,255,157,.18),rgba(0,212,255,.1));
+  border:1px solid rgba(0,255,157,.35);color:var(--text-hi);
+  transition:all .3s var(--ease-out);
+  text-decoration:none;cursor:pointer;
+}
+.gc-dl-btn:hover{background:linear-gradient(135deg,rgba(0,255,157,.32),rgba(0,212,255,.18));box-shadow:0 0 22px rgba(0,255,157,.25);}
+.gc-dl-btn:active{transform:scale(.97);}
+
+.mod-grid,.addon-grid,.map-grid,.texture-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;}
+@media (max-width:1180px){.mod-grid,.addon-grid,.map-grid,.texture-grid{grid-template-columns:repeat(3,1fr);}}
+@media (max-width:760px){.mod-grid,.addon-grid,.map-grid,.texture-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:460px){.mod-grid,.addon-grid,.map-grid,.texture-grid{grid-template-columns:1fr;}}
+
+/* ===================== NEWS ===================== */
+.news-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:22px;}
+.news-card{
+  border-radius:var(--radius-card);overflow:hidden;
+  background:var(--glass-bg);border:1px solid var(--glass-border);backdrop-filter:blur(14px);
+  display:flex;flex-direction:column;
+  transition:transform .4s var(--ease-out),border-color .4s;
+}
+.news-card:hover{transform:translateY(-6px);border-color:rgba(0,255,157,.4);}
+.news-card.featured{grid-row:span 2;}
+.news-thumb{height:170px;position:relative;overflow:hidden;}
+.news-card.featured .news-thumb{height:260px;}
+.news-cat{
+  position:absolute;top:14px;right:14px;z-index:2;
+  padding:5px 13px;border-radius:50px;font-size:11px;font-weight:800;
+  background:rgba(0,0,0,.5);color:var(--grass);backdrop-filter:blur(6px);
+}
+.news-content{padding:20px;flex:1;display:flex;flex-direction:column;}
+.news-date{font-size:12px;color:var(--text-low);font-weight:700;margin-bottom:8px;}
+.news-content h3{font-size:17px;font-weight:800;margin-bottom:10px;line-height:1.5;}
+.news-card.featured h3{font-size:22px;}
+.news-content p{color:var(--text-mid);font-size:13.5px;flex:1;}
+.news-read{display:inline-flex;align-items:center;gap:6px;margin-top:14px;color:var(--diamond);font-weight:800;font-size:13.5px;}
+@media (max-width:980px){.news-grid{grid-template-columns:1fr 1fr;}.news-card.featured{grid-column:span 2;grid-row:auto;}}
+@media (max-width:620px){.news-grid{grid-template-columns:1fr;}.news-card.featured{grid-column:auto;}}
+
+/* ===================== COMMUNITY ===================== */
+.community-layout{display:grid;grid-template-columns:1.6fr 1fr;gap:30px;align-items:start;}
+.testimonial-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.testimonial-card{
+  padding:24px;border-radius:var(--radius-card);
+  background:var(--glass-bg);border:1px solid var(--glass-border);backdrop-filter:blur(14px);
+  transition:transform .4s var(--ease-out),border-color .4s;
+}
+.testimonial-card:hover{transform:translateY(-5px);border-color:rgba(0,255,157,.35);}
+.t-stars{color:var(--gold);font-size:14px;margin-bottom:12px;letter-spacing:2px;}
+.testimonial-card p{color:var(--text-mid);font-size:14.5px;margin-bottom:18px;}
+.t-user{display:flex;align-items:center;gap:10px;}
+.t-avatar{
+  width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:14px;color:#04130c;flex-shrink:0;
+}
+.t-name{font-weight:800;font-size:13.5px;}
+.t-role{font-size:11.5px;color:var(--text-low);}
+.leaderboard{
+  padding:26px;border-radius:var(--radius-card);
+  background:var(--glass-bg);border:1px solid var(--glass-border-blue);backdrop-filter:blur(14px);
+}
+.lb-title{font-size:18px;font-weight:800;margin-bottom:18px;}
+.lb-list{display:flex;flex-direction:column;gap:4px;}
+.lb-item{display:flex;align-items:center;gap:12px;padding:11px 8px;border-radius:10px;transition:background .25s;}
+.lb-item:hover{background:rgba(255,255,255,.04);}
+.lb-rank{
+  width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:12px;flex-shrink:0;
+}
+.lb-rank.gold{background:rgba(255,215,0,.18);color:var(--gold);}
+.lb-rank.silver{background:rgba(192,192,192,.18);color:#d4d4d4;}
+.lb-rank.bronze{background:rgba(205,127,50,.18);color:#e0995e;}
+.lb-rank.other{background:rgba(255,255,255,.06);color:var(--text-low);}
+.lb-name{flex:1;font-weight:700;font-size:13.5px;}
+.lb-score{font-size:12px;color:var(--grass);font-weight:800;font-family:monospace;}
+@media (max-width:920px){.community-layout{grid-template-columns:1fr;}.testimonial-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:560px){.testimonial-grid{grid-template-columns:1fr;}}
+
+/* ===================== SUPPORT ===================== */
+.support-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:30px;align-items:start;}
+.support-form{
+  padding:34px;border-radius:var(--radius-card);
+  background:var(--glass-bg);border:1px solid var(--glass-border);backdrop-filter:blur(16px);
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.form-group{margin-bottom:20px;display:flex;flex-direction:column;gap:8px;}
+.form-group label{font-size:13.5px;font-weight:700;color:var(--text-mid);}
+.form-group input,.form-group select,.form-group textarea{
+  padding:13px 16px;border-radius:10px;
+  background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);
+  color:var(--text-hi);font-family:inherit;font-size:14.5px;
+  transition:border-color .25s,box-shadow .25s;
+  resize:vertical;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+  outline:none;border-color:var(--grass);box-shadow:0 0 0 3px rgba(0,255,157,.15);
+}
+.form-group select{cursor:pointer;}
+.form-submit{width:100%;justify-content:center;margin-top:6px;}
+.form-success{
+  margin-top:16px;padding:14px;border-radius:10px;text-align:center;
+  background:rgba(0,255,157,.12);border:1px solid rgba(0,255,157,.35);color:var(--grass);
+  font-weight:700;font-size:14px;
+  display:none;
+}
+.form-success.show{display:block;animation:fadeInUp .5s var(--ease-out);}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.support-side{display:flex;flex-direction:column;gap:22px;}
+.support-discord-card{
+  padding:32px;border-radius:var(--radius-card);text-align:center;
+  background:linear-gradient(150deg,rgba(88,101,242,.16),rgba(0,255,157,.05));
+  border:1px solid rgba(88,101,242,.35);backdrop-filter:blur(14px);
+}
+.sdc-icon{
+  width:64px;height:64px;border-radius:16px;margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;color:#fff;
+  background:rgba(88,101,242,.25);border:1px solid rgba(88,101,242,.5);
+}
+.support-discord-card h3{font-size:18px;font-weight:800;margin-bottom:8px;}
+.support-discord-card p{color:var(--text-mid);font-size:13.5px;margin-bottom:20px;}
+.sdc-btn{width:100%;justify-content:center;padding:15px;font-size:15px;}
+.faq-mini{padding:26px;border-radius:var(--radius-card);background:var(--glass-bg);border:1px solid var(--glass-border);backdrop-filter:blur(14px);display:flex;flex-direction:column;gap:18px;}
+.faq-item{display:flex;flex-direction:column;gap:6px;}
+.faq-item strong{font-size:14.5px;}
+.faq-item span{font-size:13px;color:var(--text-mid);}
+@media (max-width:920px){.support-layout{grid-template-columns:1fr;}}
+@media (max-width:560px){.form-row{grid-template-columns:1fr;}.support-form{padding:24px;}}
+
+/* ===================== FOOTER ===================== */
+.footer{position:relative;border-top:1px solid rgba(0,255,157,.12);padding:64px 0 24px;background:linear-gradient(180deg,transparent,rgba(0,20,12,.4));}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+.footer-brand p{color:var(--text-mid);font-size:14px;margin-top:14px;max-width:280px;}
+.footer-col h4{font-size:14.5px;font-weight:800;margin-bottom:16px;color:var(--text-hi);}
+.footer-col{display:flex;flex-direction:column;gap:11px;}
+.footer-col a{color:var(--text-mid);font-size:14px;transition:color .25s;}
+.footer-col a:hover{color:var(--grass);}
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  padding-top:24px;border-top:1px solid rgba(255,255,255,.07);
+  font-size:13px;color:var(--text-low);
+}
+@media (max-width:760px){.footer-top{grid-template-columns:1fr 1fr;}.footer-brand{grid-column:span 2;}}
+@media (max-width:480px){.footer-top{grid-template-columns:1fr;}.footer-brand{grid-column:auto;}.footer-bottom{flex-direction:column;text-align:center;}}
+
+/* ===================== BACK TO TOP ===================== */
+.back-to-top{
+  position:fixed;bottom:28px;left:28px;z-index:500;
+  width:48px;height:48px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(14,22,19,.85);border:1px solid rgba(0,255,157,.35);
+  color:var(--grass);backdrop-filter:blur(10px);
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:all .35s var(--ease-out);
+}
+.back-to-top.show{opacity:1;visibility:visible;transform:translateY(0);}
+.back-to-top:hover{background:rgba(0,255,157,.15);box-shadow:0 0 24px rgba(0,255,157,.4);transform:translateY(-3px);}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-inner">
+    <div class="loader-cube">
+      <div class="lc-face lc-top"></div>
+      <div class="lc-face lc-front"></div>
+      <div class="lc-face lc-right"></div>
+    </div>
+    <div class="loader-title">ARAB <span>CRAFT</span></div>
+    <div class="loader-bar"><div class="loader-bar-fill" id="loaderFill"></div></div>
+    <div class="loader-pct" id="loaderPct">0%</div>
+  </div>
+</div>
+
+<div id="bgCanvasWrap">
+  <canvas id="bgCanvas"></canvas>
+  <div class="bg-particles" id="bgParticles"></div>
+  <div class="bg-vignette"></div>
+  <div class="bg-grid"></div>
+</div>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- ===================== NAVBAR ===================== -->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="#home" class="brand">
+      <span class="brand-cube"><i></i><i></i><i></i></span>
+      <span class="brand-text">ARAB<span>CRAFT</span></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">الرئيسية</a>
+      <a href="#download">تحميل</a>
+      <a href="#servers">السيرفرات</a>
+      <a href="#mods">المودات</a>
+      <a href="#addons">الإضافات</a>
+      <a href="#maps">الخرائط</a>
+      <a href="#textures">Texture</a>
+      <a href="#news">الأخبار</a>
+      <a href="#community">المجتمع</a>
+      <a href="#support">الدعم</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="https://discord.gg/WZ4bfGK6p" target="_blank" rel="noopener" class="btn-discord-mini">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.893.076.076 0 0 0-.04.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.029 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.057c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.955 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+        <span>Discord</span>
+      </a>
+      <button class="nav-burger" id="navBurger" aria-label="فتح القائمة"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section id="home" class="hero">
+  <div class="hero-blocks" aria-hidden="true">
+    <div class="floaty fb1"></div>
+    <div class="floaty fb2"></div>
+    <div class="floaty fb3"></div>
+    <div class="floaty fb4"></div>
+    <div class="floaty fb5"></div>
+  </div>
+  <div class="container hero-inner">
+    <div class="hero-badge reveal">
+      <span class="ping"></span> منصة عربية لمحبي Minecraft
+    </div>
+    <h1 class="hero-title reveal">
+      <span class="ht-line">أهلاً بك في عالم</span>
+      <span class="ht-brand">ARAB <span class="text-grad">CRAFT</span></span>
+    </h1>
+    <p class="hero-desc reveal">
+      أفضل منصة عربية لتحميل ماين كرافت والمودات والإضافات والسيرفرات في مكان واحد.
+      ابنِ، استكشف، وانجُ — بكل ما تحتاجه بلغتك.
+    </p>
+    <div class="hero-actions reveal">
+      <a href="#download" class="btn btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v13m0 0 5-5m-5 5-5-5M5 21h14"/></svg>
+        تحميل Minecraft
+      </a>
+      <a href="https://discord.gg/WZ4bfGK6p" target="_blank" rel="noopener" class="btn btn-discord">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.893.076.076 0 0 0-.04.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.029 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.057c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.955 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+        الانضمام للديسكورد
+      </a>
+    </div>
+    <div class="hero-scroll reveal" aria-hidden="true">
+      <span>مرر للأسفل</span>
+      <div class="scroll-mouse"><div class="scroll-dot"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STATS ===================== -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid reveal-stagger" id="statsGrid">
+      <div class="stat-card">
+        <div class="stat-icon">⬇</div>
+        <div class="stat-num" data-target="2" data-suffix="">0</div>
+        <div class="stat-label">نسخ Minecraft</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📦</div>
+        <div class="stat-num" data-target="10" data-suffix="">0</div>
+        <div class="stat-label">مود حقيقي للتحميل</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💯</div>
+        <div class="stat-num" data-target="100" data-suffix="%">0</div>
+        <div class="stat-label">تحميل مجاني</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🚀</div>
+        <div class="stat-num" data-target="1" data-suffix="">0</div>
+        <div class="stat-label">منصة عربية واحدة</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DOWNLOAD ===================== -->
+<section id="download" class="section">
+  <div class="container">
+    <div class="eyebrow reveal">ابدأ رحلتك</div>
+    <h2 class="section-title reveal">تحميل <span class="text-grad">Minecraft</span></h2>
+    <p class="section-sub reveal">اختر النسخة المناسبة لجهازك وابدأ اللعب الآن — تحميل مباشر وسريع.</p>
+
+    <div class="download-grid reveal-stagger">
+      <div class="download-card">
+        <div class="dc-glow"></div>
+        <div class="dc-top">
+          <div class="dc-icon">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h3"/></svg>
+          </div>
+          <span class="dc-tag">الأحدث</span>
+        </div>
+        <h3>Minecraft <span>26.0</span></h3>
+        <p>نسخة محسّنة وخفيفة، متوافقة مع أغلب الأجهزة، تعمل بسلاسة تامة.</p>
+        <ul class="dc-meta">
+          <li><strong>APK</strong> النوع</li>
+          <li><strong>Android</strong> المنصة</li>
+        </ul>
+        <a href="https://www.mediafire.com/file/esfglvue7fr53ms/minecraft-26-0.apk/file?dkey=0ykeop8blbp&r=286" target="_blank" rel="noopener" class="btn btn-primary dc-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v13m0 0 5-5m-5 5-5-5M5 21h14"/></svg>
+          تحميل الآن
+        </a>
+      </div>
+
+      <div class="download-card">
+        <div class="dc-glow dc-glow-blue"></div>
+        <div class="dc-top">
+          <div class="dc-icon dc-icon-blue">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h3"/></svg>
+          </div>
+          <span class="dc-tag dc-tag-blue">الأحدث</span>
+        </div>
+        <h3>Minecraft <span>26.20</span></h3>
+        <p>نسخة بمزايا إضافية وتحديثات حصرية لتجربة لعب أفضل.</p>
+        <ul class="dc-meta">
+          <li><strong>APK</strong> النوع</li>
+          <li><strong>Android</strong> المنصة</li>
+        </ul>
+        <a href="https://www.mediafire.com/file/l1vjjjhtaltkau2/minecraft-26-20.apk/file" target="_blank" rel="noopener" class="btn btn-primary dc-btn dc-btn-blue">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v13m0 0 5-5m-5 5-5-5M5 21h14"/></svg>
+          تحميل الآن
+        </a>
+      </div>
+    </div>
+
+    <div class="discord-banner reveal">
+      <div class="db-content">
+        <h3>انضم لمجتمعنا على <span class="text-grad">Discord</span></h3>
+        <p>تواصل مع آلاف اللاعبين العرب، شارك إبداعاتك، واحصل على آخر التحديثات أولاً بأول.</p>
+      </div>
+      <a href="https://discord.gg/WZ4bfGK6p" target="_blank" rel="noopener" class="btn-discord-lg">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.893.076.076 0 0 0-.04.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.029 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.057c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.955 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+        الانضمام إلى Discord الآن
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVERS ===================== -->
+<section id="servers" class="section section-alt">
+  <div class="container">
+    <div class="eyebrow reveal">العب الآن</div>
+    <h2 class="section-title reveal">أفضل <span class="text-grad">السيرفرات</span></h2>
+    <p class="section-sub reveal">سيرفراتنا قيد الإعداد حاليًا — تابعنا على Discord لمعرفة موعد الإطلاق.</p>
+
+    <div class="server-grid reveal-stagger" id="serverGrid"></div>
+  </div>
+</section>
+
+<!-- ===================== MODS ===================== -->
+<section id="mods" class="section">
+  <div class="container">
+    <div class="eyebrow reveal">طوّر تجربتك</div>
+    <h2 class="section-title reveal">أفضل <span class="text-grad">المودات</span></h2>
+    <p class="section-sub reveal">مودات حقيقية مختارة بعناية — تحميل مباشر بصيغة ZIP بكبسة زر واحدة.</p>
+
+    <div class="mod-grid reveal-stagger" id="modGrid"></div>
+  </div>
+</section>
+
+<!-- ===================== ADDONS ===================== -->
+<section id="addons" class="section section-alt">
+  <div class="container">
+    <div class="eyebrow reveal">حصري Bedrock</div>
+    <h2 class="section-title reveal">الإضافات <span class="text-grad">Addons</span></h2>
+    <p class="section-sub reveal">إضافات متوافقة مع نسخة Bedrock تضيف عناصر وميكانيكيات جديدة.</p>
+
+    <div class="addon-grid reveal-stagger" id="addonGrid"></div>
+  </div>
+</section>
+
+<!-- ===================== MAPS ===================== -->
+<section id="maps" class="section">
+  <div class="container">
+    <div class="eyebrow reveal">عوالم جاهزة</div>
+    <h2 class="section-title reveal">الخرائط <span class="text-grad">Maps</span></h2>
+    <p class="section-sub reveal">خرائط مصممة بعناية لتحديات وتجارب لعب مختلفة كليًا.</p>
+
+    <div class="map-grid reveal-stagger" id="mapGrid"></div>
+  </div>
+</section>
+
+<!-- ===================== TEXTURE PACKS ===================== -->
+<section id="textures" class="section section-alt">
+  <div class="container">
+    <div class="eyebrow reveal">غيّر المظهر</div>
+    <h2 class="section-title reveal">حزم <span class="text-grad">Texture Packs</span></h2>
+    <p class="section-sub reveal">حسّن جودة الرسوميات أو الأداء بحزم تكستر مختارة بعناية.</p>
+
+    <div class="texture-grid reveal-stagger" id="textureGrid"></div>
+  </div>
+</section>
+
+<!-- ===================== NEWS ===================== -->
+<section id="news" class="section">
+  <div class="container">
+    <div class="eyebrow reveal">ابقَ على اطلاع</div>
+    <h2 class="section-title reveal">آخر <span class="text-grad">الأخبار</span></h2>
+    <p class="section-sub reveal">كل جديد حول ماين كرافت وتحديثاته في مكان واحد.</p>
+
+    <div class="news-grid reveal-stagger" id="newsGrid"></div>
+  </div>
+</section>
+
+<!-- ===================== COMMUNITY ===================== -->
+<section id="community" class="section section-alt">
+  <div class="container">
+    <div class="eyebrow reveal">صوت اللاعبين</div>
+    <h2 class="section-title reveal">مجتمع <span class="text-grad">Arab Craft</span></h2>
+    <p class="section-sub reveal">مجتمعنا في بداية الطريق — كن جزءًا من قصته الأولى.</p>
+
+    <div class="community-layout">
+      <div class="testimonial-grid reveal-stagger" id="testimonialGrid"></div>
+      <div class="leaderboard reveal">
+        <h3 class="lb-title">🏆 أفضل اللاعبين</h3>
+        <ul class="lb-list" id="lbList"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SUPPORT ===================== -->
+<section id="support" class="section">
+  <div class="container">
+    <div class="eyebrow reveal">نحن هنا للمساعدة</div>
+    <h2 class="section-title reveal">الدعم <span class="text-grad">الفني</span></h2>
+    <p class="section-sub reveal">واجهت مشكلة؟ تواصل معنا وسنرد عليك في أقرب وقت.</p>
+
+    <div class="support-layout">
+      <form class="support-form reveal" id="supportForm" action="https://formsubmit.co/omarmhamadk@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="رسالة دعم فني جديدة - Arab Craft">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="box">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fName">الاسم</label>
+            <input type="text" id="fName" name="الاسم" placeholder="اسمك الكامل" required>
+          </div>
+          <div class="form-group">
+            <label for="fEmail">البريد الإلكتروني</label>
+            <input type="email" id="fEmail" name="البريد الإلكتروني" placeholder="example@email.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="fSubject">الموضوع</label>
+          <select id="fSubject" name="الموضوع">
+            <option>مشكلة في التحميل</option>
+            <option>مشكلة في سيرفر</option>
+            <option>اقتراح مود أو إضافة</option>
+            <option>إبلاغ عن خطأ</option>
+            <option>أخرى</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="fMsg">الرسالة</label>
+          <textarea id="fMsg" name="الرسالة" rows="5" placeholder="اكتب رسالتك هنا..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary form-submit">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z"/></svg>
+          إرسال الرسالة
+        </button>
+        <div class="form-success" id="formSuccess">✓ تم إرسال رسالتك بنجاح! سنتواصل معك قريبًا.</div>
+      </form>
+
+      <div class="support-side reveal">
+        <div class="support-discord-card">
+          <div class="sdc-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.893.076.076 0 0 0-.04.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.029 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.057c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.955 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          </div>
+          <h3>تواصل فوري عبر Discord</h3>
+          <p>انضم لقناة الدعم الفني واحصل على مساعدة مباشرة من الفريق والمجتمع.</p>
+          <a href="https://discord.gg/WZ4bfGK6p" target="_blank" rel="noopener" class="btn-discord-lg sdc-btn">
+            الانضمام الآن
+          </a>
+        </div>
+        <div class="faq-mini">
+          <div class="faq-item">
+            <strong>كم يستغرق الرد؟</strong>
+            <span>عادة خلال 24 ساعة عبر البريد، وفوريًا عبر Discord.</span>
+          </div>
+          <div class="faq-item">
+            <strong>هل الموقع مجاني؟</strong>
+            <span>نعم، جميع التحميلات والمحتوى مجاني بالكامل.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#home" class="brand">
+          <span class="brand-cube"><i></i><i></i><i></i></span>
+          <span class="brand-text">ARAB<span>CRAFT</span></span>
+        </a>
+        <p>المنصة العربية الأولى لكل ما يخص عالم Minecraft.</p>
+      </div>
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <a href="#download">تحميل</a>
+        <a href="#servers">السيرفرات</a>
+        <a href="#mods">المودات</a>
+        <a href="#maps">الخرائط</a>
+      </div>
+      <div class="footer-col">
+        <h4>المجتمع</h4>
+        <a href="#news">الأخبار</a>
+        <a href="#community">آراء اللاعبين</a>
+        <a href="#support">الدعم الفني</a>
+        <a href="https://discord.gg/WZ4bfGK6p" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Arab Craft. جميع الحقوق محفوظة.</span>
+      <span class="footer-note">هذا الموقع غير تابع لشركة Mojang أو Microsoft.</span>
+    </div>
+  </div>
+</footer>
+
+<button id="backToTop" class="back-to-top" aria-label="العودة للأعلى">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m18 15-6-6-6 6"/></svg>
+</button>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============ LOADER ============ */
+  const loader = document.getElementById('loader');
+  const loaderFill = document.getElementById('loaderFill');
+  const loaderPct = document.getElementById('loaderPct');
+  let pct = 0;
+  const loadInterval = setInterval(()=>{
+    pct += Math.random()*18 + 6;
+    if(pct >= 100){
+      pct = 100;
+      clearInterval(loadInterval);
+      setTimeout(()=>{ loader.classList.add('hidden'); document.body.style.overflow=''; initReveals(); },350);
+    }
+    loaderFill.style.width = pct + '%';
+    loaderPct.textContent = Math.floor(pct) + '%';
+  }, 180);
+  document.body.style.overflow='hidden';
+  setTimeout(()=>{document.body.style.overflow='';}, 3000);
+
+  /* ============ NAVBAR ============ */
+  const navbar = document.getElementById('navbar');
+  const navLinks = document.getElementById('navLinks');
+  const navBurger = document.getElementById('navBurger');
+  window.addEventListener('scroll', ()=>{
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+    backToTop.classList.toggle('show', window.scrollY > 700);
+  }, {passive:true});
+  navBurger.addEventListener('click', ()=>{
+    navLinks.classList.toggle('open');
+    navBurger.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>{
+    navLinks.classList.remove('open'); navBurger.classList.remove('open');
+  }));
+
+  /* ============ BACK TO TOP ============ */
+  const backToTop = document.getElementById('backToTop');
+  backToTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+  /* ============ CURSOR GLOW ============ */
+  const cursorGlow = document.getElementById('cursorGlow');
+  let cgX = window.innerWidth/2, cgY = window.innerHeight*0.3;
+  if(window.matchMedia('(hover: hover)').matches){
+    window.addEventListener('mousemove', e=>{
+      cursorGlow.style.left = e.clientX + 'px';
+      cursorGlow.style.top = e.clientY + 'px';
+    }, {passive:true});
+  }
+
+  /* ============ SCROLL REVEALS ============ */
+  function initReveals(){
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting){ en.target.classList.add('in'); obs.unobserve(en.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -60px 0px'});
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=>obs.observe(el));
+  }
+
+  /* ============ STAT COUNTERS ============ */
+  const statObs = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){
+        animateCounter(en.target);
+        statObs.unobserve(en.target);
+      }
+    });
+  }, {threshold:0.5});
+  document.querySelectorAll('.stat-num').forEach(el=>statObs.observe(el));
+  function animateCounter(el){
+    const target = parseInt(el.dataset.target, 10);
+    const suffix = el.dataset.suffix || '';
+    const dur = 1800;
+    const start = performance.now();
+    function tick(now){
+      const p = Math.min((now-start)/dur, 1);
+      const eased = 1 - Math.pow(1-p, 3);
+      el.textContent = Math.floor(eased * target) + suffix;
+      if(p < 1) requestAnimationFrame(tick);
+      else el.textContent = target + suffix;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* ============ SERVERS: لا توجد سيرفرات حقيقية بعد - قريباً ============ */
+  const serverGrid = document.getElementById('serverGrid');
+  const serverTypes = [
+    {icon:'🌳', name:'Survival', colors:['#1a2e22','#0d1a12']},
+    {icon:'🛏️', name:'BedWars', colors:['#2e1a1a','#1a0d0d']},
+    {icon:'☁️', name:'SkyWars', colors:['#1a232e','#0d121a']},
+    {icon:'🧊', name:'OneBlock', colors:['#2e2a1a','#1a160d']},
+    {icon:'❤️', name:'Lifesteal', colors:['#2e1a22','#1a0d12']},
+    {icon:'⚔️', name:'PvP', colors:['#241a2e','#140d1a']},
+  ];
+  serverGrid.innerHTML = serverTypes.map(s => `
+    <div class="server-card soon-card">
+      <div class="sc-scene" style="background:linear-gradient(180deg,${s.colors[0]},${s.colors[1]})">
+        <div class="sc-sky"></div>
+        <span class="soon-icon">${s.icon}</span>
+        <div class="soon-badge">قريبًا</div>
+      </div>
+      <div class="server-body">
+        <h3>سيرفر ${s.name}</h3>
+        <p>هذا السيرفر قيد الإعداد حاليًا وسيتم تفعيله قريبًا. تابعنا على Discord لمعرفة موعد الإطلاق.</p>
+      </div>
+    </div>
+  `).join('');
+
+  /* ============ DATA: MODS (حقيقية - تحميل مباشر ZIP) ============ */
+  const mods = [
+    {icon:'🗺️', name:'مود الخريطة', file:'مود_الخريطه.zip', desc:'خريطة مصغّرة حقيقية على الشاشة (Real Minimap) تعرض المناطق المحيطة والمعالم أثناء اللعب.', ver:'Real Minimap', size:'1.0 MB', color:'#1a2e3d'},
+    {icon:'📍', name:'واي بوينت', file:'واي_بوينت_.zip', desc:'إضافة نقاط تتبع (Waypoints) متعددة اللاعبين لتحديد المواقع المهمة ومشاركتها مع أصدقائك.', ver:'v2.3.20', size:'790 KB', color:'#1a3d3d'},
+    {icon:'🔴', name:'مود إيزي ردستون', file:'مود_ايزي_ردستون_.zip', desc:'يسهّل بناء آليات الردستون المعقدة بقطع جاهزة وميكانيكيات مبسّطة.', ver:'Easy Redstone', size:'1.4 MB', color:'#3d1a1a'},
+    {icon:'🎒', name:'مود الحقيبة', file:'مود_الحقيبة_.zip', desc:'حقيبة ظهر بمساحة تخزين إضافية تواكبك أثناء الاستكشاف والمغامرات.', ver:'Backpack', size:'199 KB', color:'#2e1a3d'},
+    {icon:'🌙', name:'نايت فجن', file:'نايت_فجن_.zip', desc:'رؤية ليلية واضحة تمامًا كالنهار، مثالية للاستكشاف والتعدين الليلي.', ver:'Night Vision', size:'42 KB', color:'#1a1a3d'},
+    {icon:'🪄', name:'عصا الأدمن', file:'عصا_الادمن___1_.zip', desc:'أداة AdminUtils متكاملة بصلاحيات وأوامر إدارية سريعة لمالكي السيرفرات.', ver:'AdminUtils v1.1.16', size:'852 KB', color:'#3d2e1a'},
+    {icon:'🔤', name:'اللغة العربية', file:'اللغة_العربية_.zip', desc:'حزمة تعريب كاملة لواجهة اللعبة وكل القوائم والنصوص داخل ماين كرافت.', ver:'Arabic RP', size:'41 KB', color:'#1a3d2e'},
+    {icon:'👁️', name:'رؤية جسدك', file:'رؤية_جسدك_.zip', desc:'تفعيل رؤية الجسم الكامل بمنظور الشخص الأول (Dynamic First Person Model).', ver:'First Person Model', size:'687 KB', color:'#3d1a2e'},
+    {icon:'⚒️', name:'صناعة سهلة', file:'صناعة_سهلة_.zip', desc:'يبسّط واجهة الصناعة (Smooth Craft) بتأثيرات بصرية محسّنة وتجربة أسرع.', ver:'Smooth Craft Add-On', size:'276 KB', color:'#2e3a1a'},
+    {icon:'🎬', name:'ريسوس الأنيميشن', file:'ريسوس_الانميشن_.zip', desc:'حزمة موارد ضخمة بأنيميشنات وحركات محسّنة لتجربة بصرية أكثر حيوية.', ver:'Animation RP', size:'20 MB', color:'#3d2e3d'},
+  ];
+  document.getElementById('modGrid').innerHTML = mods.map(m => `
+    <div class="glass-card">
+      <div class="voxel-thumb" style="background:linear-gradient(160deg,${m.color},#0a0f0d)">
+        <div class="voxel-shine"></div>
+        <span class="voxel-icon">${m.icon}</span>
+      </div>
+      <div class="gc-body">
+        <h3>${m.name}</h3>
+        <p>${m.desc}</p>
+        <div class="gc-meta-row"><span class="gc-version">${m.ver}</span><span class="gc-size">${m.size}</span></div>
+        <a class="gc-dl-btn" href="downloads/${encodeURIComponent(m.file)}" download="${m.file}">⬇ تحميل ZIP</a>
+      </div>
+    </div>
+  `).join('');
+
+  /* ============ MAIN-CONTENT: قريباً (لا يوجد محتوى حقيقي بعد) ============ */
+  function comingSoonCard(icon, name, color){
+    return `
+    <div class="glass-card soon-card">
+      <div class="voxel-thumb" style="background:linear-gradient(160deg,${color},#0a0f0d)">
+        <div class="voxel-shine"></div>
+        <span class="voxel-icon">${icon}</span>
+        <div class="soon-badge">قريبًا</div>
+      </div>
+      <div class="gc-body">
+        <h3>${name}</h3>
+        <p>هذا المحتوى قيد الإعداد وسيُضاف قريبًا. تابعنا على Discord ليصلك إشعار فور الإطلاق.</p>
+      </div>
+    </div>`;
+  }
+
+  /* ============ ADDONS: قريباً ============ */
+  const addonTypes = [
+    {icon:'⚔️', name:'Weapons Addon', color:'#3d1a1a'},
+    {icon:'🛋️', name:'Furniture Addon', color:'#3d2e1a'},
+    {icon:'✨', name:'Magic Addon', color:'#2e1a3d'},
+    {icon:'🐲', name:'Dragon Addon', color:'#3d1a1a'},
+    {icon:'🚗', name:'Vehicles Addon', color:'#1a2e3d'},
+    {icon:'🏕️', name:'Survival Addon', color:'#1a3d2e'},
+  ];
+  document.getElementById('addonGrid').innerHTML = addonTypes.map(a => comingSoonCard(a.icon, a.name, a.color)).join('');
+
+  /* ============ MAPS: قريباً ============ */
+  const mapTypes = [
+    {icon:'🧊', name:'One Block', color:'#1a2e3d'},
+    {icon:'☁️', name:'SkyBlock', color:'#1a3d3d'},
+    {icon:'🍀', name:'Lucky Block', color:'#1a3d1a'},
+    {icon:'🏃', name:'Parkour', color:'#3d2e1a'},
+    {icon:'👻', name:'Horror', color:'#1a1a1a'},
+    {icon:'🗺️', name:'Adventure', color:'#3d1a2e'},
+  ];
+  document.getElementById('mapGrid').innerHTML = mapTypes.map(m => comingSoonCard(m.icon, m.name, m.color)).join('');
+
+  /* ============ TEXTURE PACKS: قريباً ============ */
+  const textureTypes = [
+    {icon:'💡', name:'RTX Packs', color:'#2e1a3d'},
+    {icon:'🌄', name:'Realistic Packs', color:'#1a3d2e'},
+    {icon:'🎯', name:'PvP Packs', color:'#3d1a1a'},
+    {icon:'⚡', name:'FPS Boost Packs', color:'#1a2e3d'},
+  ];
+  document.getElementById('textureGrid').innerHTML = textureTypes.map(t => comingSoonCard(t.icon, t.name, t.color)).join('');
+
+  /* ============ NEWS: قريباً ============ */
+  document.getElementById('newsGrid').innerHTML = `
+    <div class="news-card featured soon-card" style="grid-column:1/-1;">
+      <div class="news-thumb" style="background:linear-gradient(160deg,#1a3d2e,#0a0f0d);height:200px;">
+        <div class="voxel-shine"></div>
+        <span class="soon-icon">📰</span>
+        <div class="soon-badge">قريبًا</div>
+      </div>
+      <div class="news-content" style="text-align:center;align-items:center;">
+        <h3>قسم الأخبار قيد التجهيز</h3>
+        <p>سننشر هنا آخر أخبار وتحديثات Minecraft فور توفرها. تابعنا على Discord ليصلك كل جديد أولًا بأول.</p>
+      </div>
+    </div>
+  `;
+
+  /* ============ TESTIMONIALS: قريباً (لا توجد آراء حقيقية بعد) ============ */
+  document.getElementById('testimonialGrid').innerHTML = `
+    <div class="testimonial-card soon-card" style="grid-column:1/-1;text-align:center;">
+      <div style="font-size:34px;margin-bottom:12px;">💬</div>
+      <h3 style="font-size:17px;margin-bottom:8px;">لا توجد آراء بعد</h3>
+      <p style="margin-bottom:0;">كن أول من يشاركنا تجربته! انضم لمجتمعنا على Discord وشاركنا رأيك.</p>
+    </div>
+  `;
+
+  /* ============ LEADERBOARD: قريباً (لا توجد بيانات حقيقية بعد) ============ */
+  document.getElementById('lbList').innerHTML = `
+    <li class="lb-item soon-card" style="flex-direction:column;text-align:center;padding:24px 8px;gap:8px;">
+      <span style="font-size:26px;">🏆</span>
+      <span class="lb-name" style="font-size:13px;">قريبًا — تابعنا على Discord</span>
+    </li>
+  `;
+
+  /* ============ SUPPORT FORM ============ */
+  const supportForm = document.getElementById('supportForm');
+  const formSuccess = document.getElementById('formSuccess');
+  supportForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const submitBtn = supportForm.querySelector('.form-submit');
+    const originalBtnHTML = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'جارٍ الإرسال...';
+
+    const formData = new FormData(supportForm);
+    fetch(supportForm.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(res => {
+      if(res.ok){
+        formSuccess.textContent = '✓ تم إرسال رسالتك بنجاح! سنتواصل معك قريبًا.';
+        formSuccess.style.background = 'rgba(0,255,157,.12)';
+        formSuccess.style.borderColor = 'rgba(0,255,157,.35)';
+        formSuccess.style.color = 'var(--grass)';
+        formSuccess.classList.add('show');
+        supportForm.reset();
+      } else {
+        throw new Error('submit failed');
+      }
+    })
+    .catch(()=>{
+      formSuccess.textContent = '⚠ تعذّر الإرسال. حاول مجددًا أو تواصل معنا عبر Discord.';
+      formSuccess.style.background = 'rgba(255,70,85,.12)';
+      formSuccess.style.borderColor = 'rgba(255,70,85,.35)';
+      formSuccess.style.color = 'var(--redstone)';
+      formSuccess.classList.add('show');
+    })
+    .finally(()=>{
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnHTML;
+      setTimeout(()=> formSuccess.classList.remove('show'), 6000);
+    });
+  });
+
+  /* ============ 3D ANIMATED BACKGROUND (Canvas) ============ */
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, DPR;
+  function resize(){
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.width = window.innerWidth * DPR;
+    H = canvas.height = window.innerHeight * DPR;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Floating voxel cubes drifting in 3D-ish parallax
+  const cubeCount = window.innerWidth < 768 ? 10 : 22;
+  const cubes = [];
+  const cubeColors = ['rgba(0,255,157,', 'rgba(0,212,255,', 'rgba(255,215,0,'];
+  for(let i=0;i<cubeCount;i++){
+    cubes.push({
+      x: Math.random(),
+      y: Math.random(),
+      z: Math.random()*0.8 + 0.2,
+      size: Math.random()*22 + 10,
+      speedY: (Math.random()*0.00012 + 0.00004) * (Math.random()<0.5?1:-1),
+      speedX: (Math.random()*0.00006 - 0.00003),
+      rot: Math.random()*Math.PI,
+      rotSpeed: (Math.random()*0.0006 - 0.0003),
+      color: cubeColors[Math.floor(Math.random()*cubeColors.length)],
+      opacity: Math.random()*0.25 + 0.08
+    });
+  }
+
+  let lastT = 0;
+  function animate(t){
+    const dt = t - lastT; lastT = t;
+    ctx.clearRect(0,0,W,H);
+    cubes.forEach(c=>{
+      c.y += c.speedY * dt;
+      c.x += c.speedX * dt;
+      c.rot += c.rotSpeed * dt;
+      if(c.y < -0.1) c.y = 1.1;
+      if(c.y > 1.1) c.y = -0.1;
+      if(c.x < -0.1) c.x = 1.1;
+      if(c.x > 1.1) c.x = -0.1;
+
+      const px = c.x * W;
+      const py = c.y * H;
+      const s = c.size * c.z * DPR;
+
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.rotate(c.rot);
+      ctx.globalAlpha = c.opacity * c.z;
+      ctx.fillStyle = c.color + (c.opacity*c.z) + ')';
+      ctx.shadowColor = c.color + '0.8)';
+      ctx.shadowBlur = s*0.8;
+      ctx.fillRect(-s/2, -s/2, s, s);
+      ctx.restore();
+    });
+    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+
+})();
+</script>
+
+</body>
+</html>
